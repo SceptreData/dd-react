@@ -1,11 +1,5 @@
 module.exports = {
-  plugins: [
-    {
-      resolve: `gatsby-theme-blog`,
-      options: {},
-    },
-    `gatsby-theme-waves`
-  ],
+  plugins: [`gatsby-theme-blog`, `gatsby-theme-waves`],
   // Customize your site metadata:
   siteMetadata: {
     title: `Double D React`,
