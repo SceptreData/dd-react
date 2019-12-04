@@ -4,12 +4,13 @@ module.exports = {
       resolve: `gatsby-theme-blog`,
       options: {},
     },
+    `gatsby-theme-waves`
   ],
   // Customize your site metadata:
   siteMetadata: {
-    title: `My Blog Title`,
-    author: `My Name`,
-    description: `My site description...`,
+    title: `Double D React`,
+    author: `David Bergeron + Danine Noble`,
+    description: `One day we will know what this project is about.`,
     social: [
       {
         name: `twitter`,
