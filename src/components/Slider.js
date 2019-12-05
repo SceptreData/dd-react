@@ -1,23 +1,24 @@
-import React from 'react';
+import React from "react"
 
 const Slider = ({ value, setValue }) => {
   const handleChange = e => {
-    setValue(e.target.value);
-  };
+    setValue(e.target.value)
+  }
 
   return (
     <input
-      type='range'
-      id='range'
-      min='0'
-      max='360'
-      step='1'
+      type="range"
+      id="range"
+      min="0"
+      max="360"
+      step="1"
       value={value}
-      orient='vertical'
+      orient="vertical"
       onChange={handleChange}
-      onClick={() => console.log('CLICK')}
+      onClick={() => console.log("CLICK")}
+      style={{ webkitAppearance: "slider-vertical" }}
     />
-  );
-};
+  )
+}
 
-export default Slider;
+export default Slider
