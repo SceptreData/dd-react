@@ -4,6 +4,7 @@ date: 2019-12-04
 ---
 
 import { CodeWave } from "gatsby-theme-waves"
+import {ColorPicker} from "../../src/components/ColorPicker"
 
 *By Danine Noble and David Bergeron*
 
@@ -13,9 +14,9 @@ Together, we are going to be breaking down and building a React component. On th
 menu today we have everyone's favorite UI widget: **The Color Picker**.
 
 Here's the plan:
-- First, we're going to pull apart all the little pieces that you find in a color picker.
-- Then, piece by piece, we're going to build the component.
-- Last, but certainly not least we will pick some *groovy* colors.
+1. First, we're going to pull apart all the little pieces that you find in a color picker.
+2. Then, piece by piece, we're going to build the component.
+3. Last, but certainly not least we will pick some *groovy* colors.
 
 
 <CodeWave>
@@ -46,6 +47,10 @@ function HelloWorld({
 }
 ```
 </CodeWave>
+
+Of course this project wouldn't be complete without the final color picker.
+
+<ColorPicker width={800} height={600} />
 
 *This project has been built with [Gatsby JS](https://www.gatsbyjs.org/) using the theme: [Gatsby Waves](https://www.gatsbyjs.org/packages/gatsby-theme-waves/).
  If you're interested in how we put it all together you can [check out our code on github](https://github.com/SceptreData/double-d-react). *
