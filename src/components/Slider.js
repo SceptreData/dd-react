@@ -16,7 +16,7 @@ const Slider = ({ value, setValue }) => {
       orient="vertical"
       onChange={handleChange}
       onClick={() => console.log("CLICK")}
-      style={{ webkitAppearance: "slider-vertical" }}
+      style={{ WebkitAppearance: "slider-vertical" }}
     />
   )
 }
