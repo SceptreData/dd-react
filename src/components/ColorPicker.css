@@ -16,16 +16,6 @@
   right: 0;
 }
 
-.map .pointer {
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  margin: 0 0 -5px -5px;
-  border: 1px solid;
-  border-radius: 50%;
-  will-change: auto;
-}
-
 .map .overlay {
   background: linear-gradient(
       to bottom,

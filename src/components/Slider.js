@@ -25,4 +25,4 @@ const Slider = ({ value, setValue, height }) => {
   )
 }
 
-export default Slider
+export { Slider }
