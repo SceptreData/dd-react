@@ -1,23 +1,27 @@
 import React from "react"
+import "./Slider.css"
 
-const Slider = ({ value, setValue }) => {
+const Slider = ({ value, setValue, height }) => {
   const handleChange = e => {
     setValue(e.target.value)
   }
 
+  let origin = height / 2 - 5
+
   return (
-    <input
-      type="range"
-      id="range"
-      min="0"
-      max="360"
-      step="1"
-      value={value}
-      orient="vertical"
-      onChange={handleChange}
-      onClick={() => console.log("CLICK")}
-      style={{ WebkitAppearance: "slider-vertical" }}
-    />
+    <div className="slider-wrapper">
+      <input
+        type="range"
+        id="range"
+        min="0"
+        max="360"
+        step="1"
+        value={value}
+        onChange={handleChange}
+        onClick={() => console.log("CLICK")}
+        style={{ width: height, transformOrigin: `${origin}px ${origin}px` }}
+      />
+    </div>
   )
 }
 

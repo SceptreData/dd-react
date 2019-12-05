@@ -12,15 +12,17 @@ const ColorPicker = ({ width, height }) => {
   }
 
   return (
-    <div className="color-picker">
-      <div className="map" style={{ width, height }}>
-        <div className="color-bg" style={getBackground()}>
-          <div className="overlay" />
+    <React.Fragment>
+      <div className="color-picker">
+        <div className="map" style={{ width, height }}>
+          <div className="color-bg" style={getBackground()}>
+            <div className="overlay" />
+          </div>
         </div>
+        <Slider value={sliderVal} setValue={setSliderVal} height={height} />
       </div>
-      <Slider value={sliderVal} setValue={setSliderVal} />
       <p style={{ textAlign: "center" }}> Hue: {sliderVal}</p>
-    </div>
+    </React.Fragment>
   )
 }
 
