@@ -19,7 +19,6 @@ const ColorPicker = ({ width, height }) => {
   const movePointer = e => {
     let xPos = e.nativeEvent.offsetX
     let yPos = e.nativeEvent.offsetY
-    console.log(xPos, yPos)
 
     setPointPos([xPos, yPos])
   }
@@ -28,11 +27,11 @@ const ColorPicker = ({ width, height }) => {
     function updateColor() {
       const [xPos, yPos] = pointPos
 
-      let h = sliderVal
-      let s = (xPos / width) * 100
-      let v = 100 - (yPos / height) * 100
+      const h = sliderVal
+      const s = (xPos / width) * 100
+      const v = 100 - (yPos / height) * 100
 
-      let c = tinycolor({ h, s, v })
+      const c = tinycolor({ h, s, v })
       setColor(c)
     }
 
