@@ -1,0 +1,17 @@
+.color-display {
+  background: rgb(248, 248, 248);
+  color: #222;
+  padding: 1rem .5rem;
+  border-radius: 2px;
+  font-weight: 700;
+  display: flex;
+  justify-content: space-around;
+}
+
+.color-display div {
+  margin-right: 1.5rem;
+}
+
+.color-display div:last-of-type {
+  margin-right: 0;
+}

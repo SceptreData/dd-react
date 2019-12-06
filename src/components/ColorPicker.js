@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react"
 import tinycolor from "tinycolor2"
+
 import { Slider } from "./Slider"
-import { Pointer } from "./Pointer"
+import { Map } from "./Map"
+import { ColorDisplay } from "./ColorDisplay"
 import "./ColorPicker.css"
 
 const ColorPicker = ({ width, height }) => {
   const [sliderVal, setSliderVal] = useState(150)
   const [pointPos, setPointPos] = useState([width / 2, height / 2])
-  const [color, setColor] = useState(
-    tinycolor({ h: sliderVal, s: "50%", v: "50%" })
-  )
+  const [color, setColor] = useState(tinycolor())
 
   const getBackground = () => {
     const backgroundColor = `hsl(${sliderVal}, 100%, 50%)`
@@ -19,6 +19,7 @@ const ColorPicker = ({ width, height }) => {
   const movePointer = e => {
     let xPos = e.nativeEvent.offsetX
     let yPos = e.nativeEvent.offsetY
+    console.log(xPos, yPos)
 
     setPointPos([xPos, yPos])
   }
@@ -35,33 +36,28 @@ const ColorPicker = ({ width, height }) => {
       setColor(c)
     }
 
-    updateColor()
-  }, [sliderVal, pointPos])
+    if (color) {
+      updateColor()
+    }
+  }, [sliderVal, pointPos, width, height])
 
   return (
     <>
       <div className="color-picker">
-        <div
-          className="map"
-          style={{ width, height }}
-          onClick={e => movePointer(e)}
-        >
-          <div className="color-bg" style={getBackground()}>
-            <div className="overlay" />
-          </div>
-          <Pointer coords={pointPos} />
-        </div>
-        <Slider value={sliderVal} setValue={setSliderVal} height={height} />
+        <Map
+          styles={{ width, height }}
+          bgColor={getBackground()}
+          pointer={pointPos}
+          handleClick={movePointer}
+        />
+        <Slider
+          value={sliderVal}
+          setValue={setSliderVal}
+          height={height}
+          onClick={() => console.log("click")}
+        />
       </div>
-      <p style={{ textAlign: "center" }}>
-        Hue: {sliderVal}
-        <br />
-        Hex:
-        <span style={{ color: color.toHexString() }}>
-          {color.toHexString()}
-        </span>
-        <br />
-      </p>
+      <ColorDisplay color={color} />
     </>
   )
 }
