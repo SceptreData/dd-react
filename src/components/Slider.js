@@ -18,7 +18,6 @@ const Slider = ({ value, setValue, height }) => {
         step="1"
         value={value}
         onChange={handleChange}
-        onClick={() => console.log("CLICK")}
         style={{ width: height, transformOrigin: `${origin}px ${origin}px` }}
       />
     </div>

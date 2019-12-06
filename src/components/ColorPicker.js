@@ -47,15 +47,10 @@ const ColorPicker = ({ width, height }) => {
         <Map
           styles={{ width, height }}
           bgColor={getBackground()}
-          pointer={pointPos}
+          pointerPos={pointPos}
           handleClick={movePointer}
         />
-        <Slider
-          value={sliderVal}
-          setValue={setSliderVal}
-          height={height}
-          onClick={() => console.log("click")}
-        />
+        <Slider value={sliderVal} setValue={setSliderVal} height={height} />
       </div>
       <ColorDisplay color={color} />
     </>
