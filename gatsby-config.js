@@ -2,9 +2,9 @@ module.exports = {
   plugins: [`gatsby-theme-blog`, `gatsby-theme-waves`],
   // Customize your site metadata:
   siteMetadata: {
-    title: `Double D React`,
+    title: `DD-React: Stateful Components`,
     author: `David Bergeron + Danine Noble`,
-    description: `One day we will know what this project is about.`,
+    description: `A short article breaking down state and components, using React Hooks.`,
     social: [
       {
         name: `twitter`,
