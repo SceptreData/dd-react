@@ -3,7 +3,8 @@ import { Pointer } from "./Pointer"
 
 import "./Map.css"
 
-const Map = ({ styles, bgColor, pointerPos, handleClick }) => {
+const Map = ({ styles, pointerPos, handleClick }) => {
+  const { bgColor } = styles
   return (
     <div className="map" style={styles} onClick={e => handleClick(e)}>
       <div className="color-bg" style={bgColor}>

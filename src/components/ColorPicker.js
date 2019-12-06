@@ -45,8 +45,7 @@ const ColorPicker = ({ width, height }) => {
     <>
       <div className="color-picker">
         <Map
-          styles={{ width, height }}
-          bgColor={getBackground()}
+          styles={{ width, height, bgColor: getBackground() }}
           pointerPos={pointPos}
           handleClick={movePointer}
         />
