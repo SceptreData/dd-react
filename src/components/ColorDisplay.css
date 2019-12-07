@@ -1,17 +1,40 @@
 .color-display {
-  background: rgb(252, 252, 252);
-  color: #222;
-  padding: 1rem .5rem;
-  border-radius: 2px;
-  font-weight: 700;
   display: flex;
-  justify-content: space-around;
+  color: #222;
+  padding: 1rem;
+  border-radius: 2px;
+  font-family: sans-serif;
 }
 
-.color-display div {
+.color-display,
+.color-display > div > div {
+  background: #fff;
+}
+
+.color-display > div:not(:first-child) {
+  position: relative;
+  border: 1px solid #ddd;
+  flex: calc(33% - 3.5rem);
+  padding: 0.9rem 0.5rem 0.7rem;
+}
+
+.color-display > div {
   margin-right: 1.5rem;
 }
 
-.color-display div:last-of-type {
+.color-display > div:last-of-type {
   margin-right: 0;
+}
+
+.color-preview {
+  width: 3.5rem;
+  height: auto;
+}
+
+.color-display > div > div {
+  position: absolute;
+  top: -0.7rem;
+  left: 0.5rem;
+  padding: 0 0.25rem;
+  font-size: 0.8em;
 }

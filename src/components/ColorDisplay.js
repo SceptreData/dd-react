@@ -5,17 +5,23 @@ const ColorDisplay = ({ color }) => {
   if (color) {
     let { h: hue } = color.toHsv()
     let hex = color.toHexString()
-    let hsl = color.toHslString()
-    let rgb = color.toRgbString()
+    let hsl = color.toHslString().slice(4, -1)
+    let rgb = color.toRgb()
 
     return (
       <div className="color-display">
-        <div style={{ color: `hsl(${Math.floor(hue)}, 100%, 50%)` }}>
-          Hue: {Math.floor(hue)}
+        <div className="color-preview" style={{ backgroundColor: hex }}></div>
+        <div>
+          <div>HEX</div> {hex}
         </div>
-        <div style={{ color: hex }}>{hex}</div>
-        <div style={{ color: rgb }}>{rgb}</div>
-        <div style={{ color: hsl }}>{hsl}</div>
+        <div>
+          <div>RGB</div>
+          {rgb["r"]}, {rgb["g"]}, {rgb["b"]}
+        </div>
+        <div>
+          <div>HSL</div>
+          {hsl}
+        </div>
       </div>
     )
   } else {
