@@ -3,7 +3,6 @@ import "./ColorDisplay.css"
 
 const ColorDisplay = ({ color }) => {
   if (color) {
-    let { h: hue } = color.toHsv()
     let hex = color.toHexString()
     let hsl = color.toHslString().slice(4, -1)
     let rgb = color.toRgb()

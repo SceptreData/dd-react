@@ -23,30 +23,181 @@ Here's the plan:
 <CodeWave>
 
 ```jsx
-function HelloWorld({
-  greeting = "hello",
-  greeted = '"World"',
-  silent = false,
-  onMouseOver,
-}) {
-  // TODO write more code
+const ColorPicker = ({ width, height }) => {
+  
+  return (
+    <>
+      <div style={{ display: "flex" }}>
+        <Map
+          styles={{ width, height, bgColor: getBackground() }}
+          pointerPos={pointPos}
+          handleClick={movePointer}
+        />
+        <Slider value={sliderVal} setValue={setSliderVal} height={height} />
+      </div>
+      <ColorDisplay color={color} />
+    </>
+  )
 }
 ```
 
-```js
-function HelloWorld({
-  greeting = "hello",
-  greeted = '"World"',
-  silent = false,
-  onMouseOver,
-}) {
-  if (!greeting) {
-    return null
+## The Pieces
+
+To get us started we broke down a simple color picker into 4 components: the Map, Slider, Pointer, and Display. Our main ColorPicker app wraps them all up, with the Pointer being a child of Map. We'll dive into those in a moment.
+
+First, let's look at our main ColorPicker.
+
+```js 2:4
+const ColorPicker = ({ width, height }) => {
+  const [sliderVal, setSliderVal] = useState(150)
+  const [pointPos, setPointPos] = useState([width / 2, height / 2])
+  const [color, setColor] = useState(tinycolor())
+  
+  return (
+    <>
+      <div style={{ display: "flex" }}>
+        <Map
+          styles={{ width, height, bgColor: getBackground() }}
+          pointerPos={pointPos}
+          handleClick={movePointer}
+        />
+        <Slider value={sliderVal} setValue={setSliderVal} height={height} />
+      </div>
+      <ColorDisplay color={color} />
+    </>
+  )
+}
+```
+
+Inside ColorPicker lives 3 states:
+
+- sliderVal: the hue returned determined by Slider
+- pointPos: the position of the pointer on the Map
+- color: the color derived from the pointer position
+
+```js 2,6:9,19
+const ColorPicker = ({ width, height }) => {
+  const [sliderVal, setSliderVal] = useState(150)
+  const [pointPos, setPointPos] = useState([width / 2, height / 2])
+  const [color, setColor] = useState(tinycolor())
+
+  const getBackground = () => {
+    const backgroundColor = `hsl(${sliderVal}, 100%, 50%)`
+    return { backgroundColor }
+  }
+  
+  return (
+    <>
+      <div style={{ display: "flex" }}>
+        <Map
+          styles={{ width, height, bgColor: getBackground() }}
+          pointerPos={pointPos}
+          handleClick={movePointer}
+        />
+        <Slider value={sliderVal} setValue={setSliderVal} height={height} />
+      </div>
+      <ColorDisplay color={color} />
+    </>
+  )
+}
+```
+
+SliderVal gets fed into ColorPicker's getBackground function, which is fed into the Map component. This is what controls the color hue displayed on the color picker's otherwise black/white gradient map.
+
+```js 3,11:16,23,24
+const ColorPicker = ({ width, height }) => {
+  const [sliderVal, setSliderVal] = useState(150)
+  const [pointPos, setPointPos] = useState([width / 2, height / 2])
+  const [color, setColor] = useState(tinycolor())
+
+  const getBackground = () => {
+    const backgroundColor = `hsl(${sliderVal}, 100%, 50%)`
+    return { backgroundColor }
   }
 
-  // TODO write more code
+  const movePointer = e => {
+    let xPos = e.nativeEvent.offsetX
+    let yPos = e.nativeEvent.offsetY
+
+    setPointPos([xPos, yPos])
+  }
+  
+  return (
+    <>
+      <div style={{ display: "flex" }}>
+        <Map
+          styles={{ width, height, bgColor: getBackground() }}
+          pointerPos={pointPos}
+          handleClick={movePointer}
+        />
+        <Slider value={sliderVal} setValue={setSliderVal} height={height} />
+      </div>
+      <ColorDisplay color={color} />
+    </>
+  )
 }
 ```
+
+The Map component listens for any clicks within its boundaries. When a click happens it triggers the movePointer function, which grabs the xy coordinates of the click within the container and feeds them back into Map who passes them along to Pointer.
+
+```js 4,6:21,33
+const ColorPicker = ({ width, height }) => {
+  const [sliderVal, setSliderVal] = useState(150)
+  const [pointPos, setPointPos] = useState([width / 2, height / 2])
+  const [color, setColor] = useState(tinycolor())
+
+  useEffect(() => {
+    function updateColor() {
+      const [xPos, yPos] = pointPos
+
+      const h = sliderVal
+      const s = (xPos / width) * 100
+      const v = 100 - (yPos / height) * 100
+
+      const c = tinycolor({ h, s, v })
+      setColor(c)
+    }
+
+    if (color) {
+      updateColor()
+    }
+  }, [sliderVal, pointPos, width, height])
+  
+  return (
+    <>
+      <div style={{ display: "flex" }}>
+        <Map
+          styles={{ width, height, bgColor: getBackground() }}
+          pointerPos={pointPos}
+          handleClick={movePointer}
+        />
+        <Slider value={sliderVal} setValue={setSliderVal} height={height} />
+      </div>
+      <ColorDisplay color={color} />
+    </>
+  )
+}
+```
+
+And finally, color. *more blurb here*
+
+```js
+const Map = ({ styles, pointerPos, handleClick }) => {
+  const { bgColor } = styles
+  return (
+    <div className="map" style={styles} onMouseDown={e => handleClick(e)}>
+      <div className="color-bg" style={bgColor}>
+        <div className="overlay" />
+      </div>
+      <Pointer coords={pointerPos} />
+    </div>
+  )
+}
+```
+
+## The Map Component
+
+
 </CodeWave>
 
 Of course this project wouldn't be complete without the final color picker.

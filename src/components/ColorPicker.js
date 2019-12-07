@@ -4,7 +4,6 @@ import tinycolor from "tinycolor2"
 import { Slider } from "./Slider"
 import { Map } from "./Map"
 import { ColorDisplay } from "./ColorDisplay"
-import "./ColorPicker.css"
 
 const ColorPicker = ({ width, height }) => {
   const [sliderVal, setSliderVal] = useState(150)
@@ -42,7 +41,7 @@ const ColorPicker = ({ width, height }) => {
 
   return (
     <>
-      <div className="color-picker">
+      <div style={{ display: "flex" }}>
         <Map
           styles={{ width, height, bgColor: getBackground() }}
           pointerPos={pointPos}
