@@ -20,9 +20,8 @@ const ColorPicker = ({ width, height }) => {
 
       const h = sliderVal
       const s = xPos / width
-      const v = 1 - yPos / (height - 1)
+      const v = 1 - parseFloat(yPos) / (height - 1)
 
-      console.log(`H: ${h}, S: ${s}, V: ${v}, Point: ${pointPos}`)
       const c = tinycolor({ h, s, v })
       setColor(c)
     }
