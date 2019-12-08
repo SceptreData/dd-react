@@ -19,9 +19,10 @@ const ColorPicker = ({ width, height }) => {
       const [xPos, yPos] = pointPos
 
       const h = sliderVal
-      const s = (xPos / width) * 100
+      const s = (xPos / width) * 100 + 1
       const v = 100 - (yPos / height) * 100
 
+      console.log(`H: ${h}, S: ${s}, V: ${v}, Point: ${pointPos}`)
       const c = tinycolor({ h, s, v })
       setColor(c)
     }
@@ -42,6 +43,7 @@ const ColorPicker = ({ width, height }) => {
         />
         <Slider value={sliderVal} setValue={setSliderVal} height={height} />
       </div>
+
       <ColorDisplay color={color} />
     </>
   )
