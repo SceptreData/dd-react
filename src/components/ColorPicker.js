@@ -10,11 +10,6 @@ const ColorPicker = ({ width, height }) => {
   const [pointPos, setPointPos] = useState([width / 2, height / 2])
   const [color, setColor] = useState(tinycolor())
 
-  const getBackground = () => {
-    const backgroundColor = `hsl(${sliderVal}, 100%, 50%)`
-    return { backgroundColor }
-  }
-
   const movePointer = (x, y) => {
     setPointPos([x, y])
   }
@@ -40,7 +35,9 @@ const ColorPicker = ({ width, height }) => {
     <>
       <div style={{ display: "flex" }}>
         <Map
-          styles={{ width, height, bgColor: getBackground() }}
+          width={width}
+          height={height}
+          bgColor={`hsl(${sliderVal}, 100%, 50%)`}
           dragging={movePointer}
         />
         <Slider value={sliderVal} setValue={setSliderVal} height={height} />
