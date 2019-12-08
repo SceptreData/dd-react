@@ -26,10 +26,9 @@
 }
 
 .map .pointer {
-  position: absolute;
   width: 15px;
   height: 15px;
-  margin: -7.5px 0 0 -7.5px;
+  margin: -7px;
   border: 1px solid;
   border-radius: 50%;
   box-shadow: 0 0 5px rgb(138, 138, 138);
