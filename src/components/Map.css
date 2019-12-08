@@ -1,4 +1,3 @@
-
 .map {
   position: relative;
   overflow: hidden;
@@ -24,4 +23,14 @@
       rgba(255, 255, 255, 1) 0%,
       rgba(255, 255, 255, 0) 100%
     );
+}
+
+.map .pointer {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  margin: -7.5px 0 0 -7.5px;
+  border: 1px solid;
+  border-radius: 50%;
+  box-shadow: 0 0 5px rgb(138, 138, 138);
 }

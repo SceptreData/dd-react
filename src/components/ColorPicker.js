@@ -15,11 +15,8 @@ const ColorPicker = ({ width, height }) => {
     return { backgroundColor }
   }
 
-  const movePointer = e => {
-    let xPos = e.nativeEvent.offsetX
-    let yPos = e.nativeEvent.offsetY
-
-    setPointPos([xPos, yPos])
+  const movePointer = (x, y) => {
+    setPointPos([x, y])
   }
 
   useEffect(() => {
@@ -44,8 +41,7 @@ const ColorPicker = ({ width, height }) => {
       <div style={{ display: "flex" }}>
         <Map
           styles={{ width, height, bgColor: getBackground() }}
-          pointerPos={pointPos}
-          handleClick={movePointer}
+          dragging={movePointer}
         />
         <Slider value={sliderVal} setValue={setSliderVal} height={height} />
       </div>
