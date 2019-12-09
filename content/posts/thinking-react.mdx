@@ -23,38 +23,75 @@ Here's the plan:
 <CodeWave>
 
 ```jsx
-const ColorPicker = ({ width, height }) => {
-  
-  return (
-    <>
-      <div style={{ display: "flex" }}>
-        <Map
-          width={width}
-          height={height}
-          bgColor={`hsl(${sliderVal}, 100%, 50%)`}
-          dragging={movePointer}
-        />
-        <Slider value={sliderVal} setValue={setSliderVal} height={height} />
-      </div>
-
-      <ColorDisplay color={color} />
-    </>
+const ColorPicker = () => (
+  <>
+  </>
   )
-}
 ```
 
 ## The Pieces
 
-To get us started we broke down a simple color picker into 3 components: the Map, Slider, and Display. Our main ColorPicker app wraps them all up. We'll dive into those in a moment.
+To get us started we tried to find the major parts involved in a color picker. 
+We are going to need:
 
-First, let's look at ColorPicker.
+- A visual representation of the color choices
+- A way to grab user input.
+- A presentational component to display our results (show which color the user has selected).
+
+
+
+```jsx
+const ColorPicker = () => (
+    <>
+      <div>
+        <Map />
+        <Slider />
+      </div>
+
+      <ColorDisplay />
+    </>
+  )
+```
+We have isolated these into three separate components: **Map** and **Slider** to get our user input,
+ **ColorDisplay** to output our results. Our Map will allow the user to click on a color, 
+  our Slider will provide an additional way to control the color options available, and the 
+  ColorDisplay will show off the pretty results.
+ 
+ At this point you might be tempted to jump right
+ into building one of the smaller components. This decision will lead to some problems: data in React only
+ flows one way, from the top to the bottom. We need to do some thinking up front about how information
+ is going to be passed through our app. 
+ 
+ What values will be changing? Which components need to know
+ about each other? In other words, we need to do some thinking about...
+
+ ## State
+
+ 
+ Let's take a step back: what are we trying do to? The end goal is a color value we can display to
+ the user in whatever format we desire. So how do we get that color value? First we have to decide on an
+ initial format: We've chosen to represent color using HSL/HSV. The user will need some way to supply
+ Hue, Saturation and Lightness values. Once we have our HSL/HSV color, we can convert it to 
+ whatever format we want. 
+
+A good place to start is our user input. In our scenario, we are taking in input from two components: 
+Our **Slider** and our **Map**. We are using the **Slider** to control our Hue value, and we are
+using the last-clicked X/Y position of the Map to control Saturation and Lightness respectively.
+
+```js
+    <>
+      <div>
+        <Map />
+        <Slider />
+      </div>
+
+      <ColorDisplay />
+    </>
+  
+```
 
 ```js 2:4
 const ColorPicker = ({ width, height }) => {
-  const [sliderVal, setSliderVal] = useState(150)
-  const [pointPos, setPointPos] = useState([width / 2, height / 2])
-  const [color, setColor] = useState(tinycolor())
-
   return (
     <>
       <div style={{ display: "flex" }}>
