@@ -58,27 +58,42 @@ We have isolated these into three separate components: **Map** and **Slider** to
   ColorDisplay will show off the pretty results.
  
  At this point you might be tempted to jump right
- into building one of the smaller components. This decision will lead to some problems: data in React only
- flows one way, from the top to the bottom. We need to do some thinking up front about how information
- is going to be passed through our app. 
- 
- What values will be changing? Which components need to know
- about each other? In other words, we need to do some thinking about...
+ into building one of the smaller components. This decision 
+ will lead to some problems: data in React only
+ flows one way, from the top to the bottom. We need to do some 
+ thinking up front  about how information is going to 
+ be passed through our app. What values will be changing?
+  Which components need to know about each other? In other words, we need to do some thinking about...
 
  ## State
 
  
  Let's take a step back: what are we trying do to? The end goal is a color value we can display to
- the user in whatever format we desire. So how do we get that color value? First we have to decide on an
- initial format: We've chosen to represent color using HSL/HSV. The user will need some way to supply
- Hue, Saturation and Lightness values. Once we have our HSL/HSV color, we can convert it to 
+ the user in whatever format we desire. So how do we get that 
+ color value? First we have to decide on an initial format: 
+ We've chosen to represent color using HSL/HSV. The user will need
+ some way to supply Hue, Saturation and Lightness values. 
+ Once we have our HSL/HSV color, we can convert it to 
  whatever format we want. 
 
-A good place to start is our user input. In our scenario, we are taking in input from two components: 
-Our **Slider** and our **Map**. We are using the **Slider** to control our Hue value, and we are
-using the last-clicked X/Y position of the Map to control Saturation and Lightness respectively.
+A good place to start is our user input. In our scenario, we are 
+taking in input from two components: Our **Slider** and our **Map**. 
+We are using the **Slider** to control our Hue value, and we are
+using the last-clicked X and Y position to control Saturation and Lightness.
+
+In order to feed these inputs to the right place, its important
+that we keep our state at the *top-level* of our component.
 
 ```js
+const ColorPicker = ({ width, height }) => {
+  // This controls our Hue
+  const [sliderVal, setSliderVal] = useState(150)
+  // This controls our Saturation and Lightness.
+  const [pointPos, setPointPos] = useState([width / 2, height / 2])
+  // This color state represents the final color result.
+  const [color, setColor] = useState(tinycolor())
+
+  return (
     <>
       <div>
         <Map />
@@ -87,34 +102,54 @@ using the last-clicked X/Y position of the Map to control Saturation and Lightne
 
       <ColorDisplay />
     </>
+  )
+}
   
 ```
 
-```js 2:4
-const ColorPicker = ({ width, height }) => {
-  return (
-    <>
-      <div style={{ display: "flex" }}>
-        <Map
-          width={width}
-          height={height}
-          bgColor={`hsl(${sliderVal}, 100%, 50%)`}
-          dragging={movePointer}
-        />
-        <Slider value={sliderVal} setValue={setSliderVal} height={height} />
-      </div>
+Additionally, we are going to find it useful to pass our color around,
+so we add an additonal Color state, the currently calculated color value.
+We are using the library [tinycolor2](http://bgrins.github.io/TinyColor/)
+to handle all of our color values, so we make sure to initialize the color
+state to the format tinycolor2 is looking for.
 
-      <ColorDisplay color={color} />
-    </>
-  )
-}
-```
+On that note, it's important we intialize our state with good "starter" values. This
+way our pointer starts at the middle of the color map, and the hue
+doesn't start at one of the extremes.
 
-ColorPicker has 3 lifted states:
+So to recap, here are our three states:
 
 - sliderVal: the hue determined by Slider
 - pointPos: the position of the pointer on the Map
 - color: the final color value derived from the pointer position and hue
+
+```js
+const ColorPicker = ({ width, height }) => {
+  const [sliderVal, setSliderVal] = useState(150)
+  const [pointPos, setPointPos] = useState([width / 2, height / 2])
+
+  return (
+    <>
+      <div>
+        <Map />
+        <Slider />
+      </div>
+
+      <ColorDisplay />
+    </>
+  )
+  }
+  
+```
+
+### SliderVal
+
+SliderVal is set by the Slider component,
+which then gets passed to the Map and sets its background color.
+We built our Slider component out of the basic HTML Range Slider. 
+Some of the alternative implementations we looked into had code over
+*10,000* lines long to build a slider. Thank goodness that comes built
+in these days.
 
 ```js 2,12,15
 const ColorPicker = ({ width, height }) => {
@@ -139,8 +174,13 @@ const ColorPicker = ({ width, height }) => {
   )
 }
 ```
+### pointPos
 
-SliderVal is set by the Slider component, which then gets passed to the Map and sets its background color.
+As we mentioned, we use the pointer's position to control 
+our saturation and lightness. When the user clicks or drags along
+our color map, we lift up the X/Y coordinates, which we use
+ to build our...
+
 
 ```js 3,6:8,17
 const ColorPicker = ({ width, height }) => {
@@ -170,7 +210,22 @@ const ColorPicker = ({ width, height }) => {
 }
 ```
 
-The position of the pointer is lifted up from the Map component.
+### Color
+
+Whenever the user changes an input, we want our color value to update.
+This is easy with React Hooks!
+
+Note our usage of useEffect here: we've listed our input states
+as dependencies. Because we've lifted our state up to the same level
+as as the useEffect call, we can watch those values for changes.
+
+Then, whenever something changes, bake me a new color baby!
+
+So wait a minute... how do we actually DO any of that? What do our 
+individual components look like? Surely we must be hiding
+10,000 lines of extra javascript *somewhere* right?
+
+let's dive a little deeper into each component.
 
 ```js 4,10:25,39
 const ColorPicker = ({ width, height }) => {
@@ -217,9 +272,6 @@ const ColorPicker = ({ width, height }) => {
 }
 ```
 
-And finally, color. This is updated with an effect hook watching for changes in the hue, pointer position, or map a resize, which is then passed into Color Display to output the various output values.
-
-Now let's dive a little deeper into each component.
 
 ```js
 const Slider = ({ value, setValue, height }) => {
