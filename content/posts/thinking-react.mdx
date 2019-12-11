@@ -297,7 +297,7 @@ We saved ourselves a lot of anguish by building our slider out of
 the basic HTML5 range slider. Our getters/setters are passed down from the component root, 
 and we use the standard DOM event 'onChange' to update the slider.
 
-```js
+```jsx
 const Map = ({ width, height, bgColor, dragging }) => (
     <div className="map" style={{ width, height }}>
       <div className="color-bg" style={{ backgroundColor: bgColor }}>
@@ -324,7 +324,7 @@ report back where the user has clicked/selected. We've jazzed things up a bit,
 and use [react-draggable](https://www.npmjs.com/package/react-draggable)
 to give us the ability to drag the target slider around. 
 
-```js
+```jsx
 const ColorDisplay = ({ color }) => {
   if (color) {
     let hex = color.toHexString()

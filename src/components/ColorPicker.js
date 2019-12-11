@@ -12,8 +12,8 @@ const ColorPicker = ({ width, height }) => {
 
   const movePointer = (x, y, updateStyle) => {
     setPointPos([x, y])
-    if (updateStyle){
-      return {transform: `translate(${x}, ${y})`}
+    if (updateStyle) {
+      return { transform: `translate(${x}, ${y})` }
     }
   }
 
