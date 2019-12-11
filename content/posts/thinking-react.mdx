@@ -107,8 +107,8 @@ const ColorPicker = ({ width, height }) => {
   
 ```
 
-Additionally, we are going to find it useful to pass our color around,
-so we add an additonal Color state, the currently calculated color value.
+Additionally, we are going to find it useful to share our calculated color value,
+between components. So we add an additonal Color state, the currently calculated color value.
 We are using the library [tinycolor2](http://bgrins.github.io/TinyColor/)
 to handle all of our color values, so we make sure to initialize the color
 state to the format tinycolor2 is looking for.
@@ -117,16 +117,12 @@ On that note, it's important we intialize our state with good "starter" values. 
 way our pointer starts at the middle of the color map, and the hue
 doesn't start at one of the extremes.
 
-So to recap, here are our three states:
 
-- sliderVal: the hue determined by Slider
-- pointPos: the position of the pointer on the Map
-- color: the final color value derived from the pointer position and hue
-
-```js
+```jsx 2,10
 const ColorPicker = ({ width, height }) => {
   const [sliderVal, setSliderVal] = useState(150)
   const [pointPos, setPointPos] = useState([width / 2, height / 2])
+  const [color, setColor] = useState(tinycolor())
 
   return (
     <>
@@ -138,7 +134,7 @@ const ColorPicker = ({ width, height }) => {
       <ColorDisplay />
     </>
   )
-  }
+}
   
 ```
 
