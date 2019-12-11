@@ -6,7 +6,9 @@ import "./Map.css"
 const Map = ({ width, height, bgColor, dragging }) => {
   return (
     <div className="map" style={{ width, height }}>
-      <div className="color-bg" style={{ backgroundColor: bgColor }}>
+      <div className="color-bg" style={{ backgroundColor: bgColor }}
+        onMouseDown={e => dragging(e.nativeEvent.offsetX, e.nativeEvent.offsetY)}
+      >
         <div className="overlay" />
       </div>
       <Draggable
