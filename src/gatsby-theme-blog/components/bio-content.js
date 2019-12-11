@@ -1,16 +1,10 @@
 import React, { Fragment } from "react"
 import { Styled } from "theme-ui"
 
-/**
- * Change the content to add your own bio
- */
 
 export default () => (
   <Fragment>
-    This is where <Styled.a href="http://example.com/">your name</Styled.a>
-    {` `}
-    goes.
-    <br />
-    Or whatever, you make the rules.
+    This project brought to you by <a href="https://github.com/SceptreData">David Bergeron</a> and <a href="https://github.com/nobledm">Danine Noble</a> 
   </Fragment>
+
 )
